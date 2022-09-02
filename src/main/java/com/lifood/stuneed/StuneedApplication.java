@@ -10,4 +10,4 @@ public class StuneedApplication {
 		SpringApplication.run(StuneedApplication.class, args);
 	}
 
-}
+} 
