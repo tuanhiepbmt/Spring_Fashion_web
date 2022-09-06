@@ -1,28 +1,59 @@
 package com.lifood.stuneed.dto;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class ProductDTO extends BaseDTO{
 	
 	private String name;
-	private String categoryId;
+	private Long categoryId;
+	private Long materialId;
+	private Long originId;
+	private CategoryDTO category;
+	private List<MaterialDTO> materials;
+	private List<OriginDTO> origins;
 	private String[] size;
-	private String type;
+	private Long typeId;
+	private TypeDTO type;
 	private String[] tags;
+	private MultipartFile[] imageFile;
 	private String[] image;
 	private int purchases;
 	private int stock;
 	private Long price;
 	private String shortDescription;
 	private String description;
+	
+	
+	public CategoryDTO getCategory() {
+		return category;
+	}
+	public void setCategory(CategoryDTO category) {
+		this.category = category;
+	}
+	public List<MaterialDTO> getMaterials() {
+		return materials;
+	}
+	public void setMaterials(List<MaterialDTO> materials) {
+		this.materials = materials;
+	}
+	public List<OriginDTO> getOrigins() {
+		return origins;
+	}
+	public void setOrigins(List<OriginDTO> origins) {
+		this.origins = origins;
+	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getCategoryId() {
+	public Long getCategoryId() {
 		return categoryId;
 	}
-	public void setCategoryId(String categoryId) {
+	public void setCategoryId(Long categoryId) {
 		this.categoryId = categoryId;
 	}
 	public String[] getSize() {
@@ -30,12 +61,6 @@ public class ProductDTO extends BaseDTO{
 	}
 	public void setSize(String[] size) {
 		this.size = size;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
 	}
 	public String[] getTags() {
 		return tags;
@@ -78,6 +103,36 @@ public class ProductDTO extends BaseDTO{
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public MultipartFile[] getImageFile() {
+		return imageFile;
+	}
+	public void setImageFile(MultipartFile[] imageFile) {
+		this.imageFile = imageFile;
+	}
+	public Long getMaterialId() {
+		return materialId;
+	}
+	public void setMaterialId(Long materialId) {
+		this.materialId = materialId;
+	}
+	public Long getOriginId() {
+		return originId;
+	}
+	public void setOriginId(Long originId) {
+		this.originId = originId;
+	}
+	public Long getTypeId() {
+		return typeId;
+	}
+	public void setTypeId(Long typeId) {
+		this.typeId = typeId;
+	}
+	public TypeDTO getType() {
+		return type;
+	}
+	public void setType(TypeDTO type) {
+		this.type = type;
 	}
 	
 }

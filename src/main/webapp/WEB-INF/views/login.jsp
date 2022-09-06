@@ -1,5 +1,6 @@
  <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,7 +8,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="format-detection" content="telephone=no">
-        <link rel="icon" type="image/x-icon" href="/template/client/images/logo.png'/>">
+        <link rel="icon" type="image/x-icon" href="/template/client/images/logo.png">
         <title>Something you need</title>
     
         <link href="https://fonts.googleapis.com/css?family=Barlow:400,600&display=swap" rel="stylesheet">
@@ -25,7 +26,7 @@
 
     </head>
     <body>
-        <%@include file="/WEB-INF/layout/client/header.jsp" %>
+        <%@include file="/WEB-INF/common/client/header.jsp" %>
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
     <main>
 
@@ -49,16 +50,17 @@
                 <div class="cont">
                     <div id="dn" class="form sign-in">
                         <h2 style="margin-top: 87px;margin-bottom: 40px;margin-left: -99px;">Đăng Nhập</h2>
+                        <form action="/j_spring_security_check" method="post">
                         <label>
                             <div style="display: flex;width:400px">
-                                <input class="emailDn" style="margin-left: -40px;text-align: left;width: 340px;"
+                                <input name="emailDn" class="emailDn" style="margin-left: -40px;text-align: left;width: 340px;"
                                     type="text" id="emailInputDn" onkeyup="checkDn()"
                                     onkeypress="return runScript(event)" placeholder="Email" />
 
                                 <div id="z-emailDn"></div>
                             </div>
                             <div style="display: flex;width:400px">
-                                <input class="passwordDn" style="margin-left: -40px;text-align: left;width: 340px;"
+                                <input name ="passwordDn" class="passwordDn" style="margin-left: -40px;text-align: left;width: 340px;"
                                     type="password" id="passwordInputDn" onkeyup="checkDn()"
                                     onkeypress="return runScript(event)" placeholder="Mật Khẩu" />
                                 <i id="showIcon" class="fa fa-eye" onclick="showPass()" aria-hidden="false"
@@ -77,7 +79,8 @@
                             </div>
                         </div>
 
-                        <button id="buttonDn" onclick="dangNhap()" type="button" class="submit">Đăng nhập</button>
+                        <button id="buttonDn" type="submit">Đăng nhập</button>
+                        </form>
                         <div style="display: flex;margin-left: 121px;">
                             <div class="divOr1"></div>
                             <span class="divOr2">Hoặc</span>
@@ -597,42 +600,7 @@
         }
     </script>
 
-    <script>
-        function dangNhap() {
-            if ($('.emailDn').val() == "") {
-                document.getElementById('z-emailDn').innerHTML = '<img  style="height: 15px;width: 15px;margin:16px 0 0 15px" src="/template/client/images/tich-do.png" alt="" title="Vui lòng Nhập Email!">'
-                if ($('.passwordDn').val() == "") {
-                    return document.getElementById('z-passwordDn').innerHTML = '<img  style="height: 15px;width: 15px;margin:16px 0 0 15px" src="/template/client/images/tich-do.png" alt="" title="Vui lòng Nhập Password!">'
-                }
-                return document.getElementById('z-emailDn').innerHTML = '<img  style="height: 15px;width: 15px;margin:16px 0 0 15px" src="/template/client/images/tich-do.png" alt="" title="Vui lòng Nhập Email!">'
-            }
-            if ($('.passwordDn').val() == "") {
-                document.getElementById('z-passwordDn').innerHTML = '<img  style="height: 15px;width: 15px;margin:16px 0 0 15px" src="/template/client/images/tich-do.png" alt="" title="Vui lòng Nhập Password!">'
-                if ($('.emailDn').val() == "") {
-                    return document.getElementById('z-emailDn').innerHTML = '<img  style="height: 15px;width: 15px;margin:16px 0 0 15px" src="/template/client/images/tich-do.png" alt="" title="Vui lòng Nhập Email!">'
-                }
-                return document.getElementById('z-passwordDn').innerHTML = '<img  style="height: 15px;width: 15px;margin:16px 0 0 15px" src="/template/client/images/tich-do.png" alt="" title="Vui lòng Nhập Password!">'
-            }
-
-            $.ajax({
-                url: '/login',
-                type: 'POST',
-                data: {
-                    email: $('.emailDn').val(),
-                    password: $('.passwordDn').val()
-                },
-                success: function (data) {
-                    if (data.message != 'Sai tên đăng nhập hoặc mật khẩu') {
-                        setCookie('token', data.token, 1)
-                        location.replace("./home");
-                    } else {
-                        document.getElementById('perr').style.display = 'block'
-                    }
-                }
-            })
-
-        }
-    </script>
+    
 
     <script>
         function dangKi() {
@@ -878,7 +846,7 @@
             }
         }
     </script>
-    <%@include file="/WEB-INF/layout/client/footer.jsp" %>
-   		<%@include file="/WEB-INF/layout/client/plugin.jsp" %>
+    <%@include file="/WEB-INF/common/client/footer.jsp" %>
+   		<%@include file="/WEB-INF/common/client/plugin.jsp" %>
     </body>
 </html>

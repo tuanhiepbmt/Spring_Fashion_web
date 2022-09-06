@@ -1,6 +1,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!-- Header - start -->
 <header class="header">
     <!-- Topbar - start -->
@@ -60,13 +61,14 @@
                         </a>
                     </li>
                     <li class="topauth">
-                        <a href="passingGuests">
-                            <i class="fa fa-user"></i>
-                            <span class="shop-menu-ttl">
-                                Thông tin khách hàng
-                            </span>
-                        </a>
-
+                    	
+	                        <a href="passingGuests">
+	                            <i class="fa fa-user"></i>
+	                            <span class="shop-menu-ttl">
+	                               <c:if test="${ empty user }"> Thông tin khách hàng </c:if>
+	                               ${ user.getName() }
+	                            </span>
+	                        </a>
 
                     </li>
 
@@ -80,9 +82,16 @@
                         </div>
                     </li>
                     <li class="topauth">
-                        <a href="login">
-                            <span class="shop-menu-ttl">Đăng nhập / Đăng kí</span>
-                        </a>
+                    	<c:if test="${ empty user }">
+	                        <a href="login">
+	                            <span class="shop-menu-ttl">Đăng nhập / Đăng kí</span>
+	                        </a>
+	                    </c:if>
+                    	<c:if test="${ not empty user }">
+	                        <a href="logout">
+	                            <span class="shop-menu-ttl">Đăng xuất</span>
+	                        </a>
+	                    </c:if>
                     </li>
                 </ul>
             </div>

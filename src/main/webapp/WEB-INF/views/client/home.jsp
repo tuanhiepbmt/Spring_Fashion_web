@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="format-detection" content="telephone=no">
-        <link rel="icon" type="image/x-icon" href="/template/client/images/logo.png'/>">
+        <link rel="icon" type="image/x-icon" href="/template/client/images/logo.png">
         <title>Something you need</title>
     
         <link href="https://fonts.googleapis.com/css?family=Barlow:400,600&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
 
     </head>
     <body>
-        <%@include file="/WEB-INF/layout/client/header.jsp" %>
+        <%@include file="/WEB-INF/common/client/header.jsp" %>
 			
 			<main>
   <section class="container">
@@ -41,7 +41,7 @@
                       </div>
                     <div class="fr-slider-cont">
                       <div class="fr-slider-cont" style="left: 0%;">
-                          <h3>SẢN PHẨM Ngu</h3>
+                          <h3>SẢN PHẨM MỚI</h3>
                           <p>Thương xuyên ra mắt những sản phẩm mới mang lại trải nghiệm mới mẻ<br>Đảm bảo giá cả hợp lí và chất lượng tốt nhất cho khách hàng</p>
                           <p class="fr-slider-more-wrap">
                               <a class="fr-slider-more" href="women-dress">Mua Sắm Ngay</a>
@@ -367,7 +367,7 @@
   </section>
 </main>
 			
-		<%@include file="/WEB-INF/layout/client/footer.jsp" %>
-   		<%@include file="/WEB-INF/layout/client/plugin.jsp" %>
+		<%@include file="/WEB-INF/common/client/footer.jsp" %>
+   		<%@include file="/WEB-INF/common/client/plugin.jsp" %>
     </body>
 </html>

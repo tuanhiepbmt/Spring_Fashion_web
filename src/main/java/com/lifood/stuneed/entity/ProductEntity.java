@@ -3,13 +3,13 @@ package com.lifood.stuneed.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "product")
@@ -25,8 +25,9 @@ public class ProductEntity extends BaseEntity {
 	@Column
 	private String[] size;
 
-	@Column
-	private String type;
+	@ManyToOne
+	@JoinColumn(name = "type_id")
+	private TypeEntity type;
 
 	@ManyToMany
 	@JoinTable(name = "product_material",
@@ -43,7 +44,7 @@ public class ProductEntity extends BaseEntity {
 		joinColumns = @JoinColumn(name = "productId"),
 		inverseJoinColumns = @JoinColumn(name = "originId")
 	)
-	private List<MaterialEntity> origins = new ArrayList<>();
+	private List<OriginEntity> origins = new ArrayList<>();
 
 	@Column
 	private String[] image;
@@ -87,11 +88,12 @@ public class ProductEntity extends BaseEntity {
 		this.size = size;
 	}
 
-	public String getType() {
+
+	public TypeEntity getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(TypeEntity type) {
 		this.type = type;
 	}
 
@@ -111,11 +113,11 @@ public class ProductEntity extends BaseEntity {
 		this.tags = tags;
 	}
 
-	public List<MaterialEntity> getOrigins() {
+	public List<OriginEntity> getOrigins() {
 		return origins;
 	}
 
-	public void setOrigins(List<MaterialEntity> origins) {
+	public void setOrigins(List<OriginEntity> origins) {
 		this.origins = origins;
 	}
 
