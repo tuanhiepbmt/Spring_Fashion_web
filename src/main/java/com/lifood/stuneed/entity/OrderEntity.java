@@ -6,7 +6,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="order_product")
+@Table(name="order")
 public class OrderEntity extends BaseEntity{
 	
 	@ManyToOne

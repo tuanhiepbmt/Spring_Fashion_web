@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.lifood.stuneed.converter.Convert;
 import com.lifood.stuneed.dto.CategoryDTO;
+import com.lifood.stuneed.dto.TypeDTO;
 import com.lifood.stuneed.entity.CategoryEntity;
+import com.lifood.stuneed.entity.TypeEntity;
 import com.lifood.stuneed.repository.CategoryRepository;
 import com.lifood.stuneed.service.ICategoryService;
 
@@ -29,5 +31,15 @@ public class CategoryService implements ICategoryService{
 		}
 		return categoryDTOList;
 	}
+
+//	@Override
+//	public List<TypeDTO> findByCategoryId(Long id) {
+//		List<TypeEntity> ListTypeEntity=categoryRepository.findByCategoryId(1L);
+//		List<TypeDTO> listTypeDTO=new ArrayList<>();
+//		for (TypeEntity typeEntity : ListTypeEntity) {
+//			listTypeDTO.add(converter.modelMapper().map(typeEntity, TypeDTO.class));
+//		}
+//		return listTypeDTO;
+//	}
 
 }

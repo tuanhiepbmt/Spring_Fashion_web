@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.lifood.stuneed.converter.Convert;
@@ -57,18 +58,84 @@ public class ProductService implements IProductService{
 	}
 	
 	@Override
-	public Optional<ProductEntity> findById(Long id) {
-		return productrepository.findById(id);
+	public ProductDTO findById(Long id) {
+		List<ProductEntity> productListEntity= toList(productrepository.findById(id));
+		ProductDTO product= converter.modelMapper().map(productListEntity.get(0), ProductDTO.class);
+		return product;
 	}
 	
 	@Override
 	public ProductDTO save(ProductDTO product) {
-		ProductEntity entity=converter.modelMapper().map(product, ProductEntity.class);
+		ProductEntity entity= null;
+		if(product.getId()!=null)
+		{
+			ProductEntity oldProduct= productrepository.findById(product.getId()).get();
+			entity=converter.toEntity(product, oldProduct);
+		}else {
+			entity= converter.modelMapper().map(product, ProductEntity.class);
+		}
+		
 		entity.setCategory(categoryRepository.findById(product.getCategoryId()).get());
-		entity.setOrigins(toList(originRepository.findById(product.getOriginId())));
-		entity.setMaterials(toList(materialRepository.findById(product.getMaterialId())));
 		entity.setType(typeRepository.findById(product.getTypeId()).get());
-		productrepository.save(entity);
+		entity.setOrigin(originRepository.findById(product.getOriginId()).get());
+		entity.setMaterial(materialRepository.findById(product.getMaterialId()).get());
+		productrepository.save(entity); 
 		return converter.modelMapper().map(entity, ProductDTO.class);
+	}
+
+
+	@Override
+	public List<ProductDTO> findAll(Pageable pageable) {
+		List<ProductEntity> pageProductEntity= productrepository.findAll(pageable).getContent();
+		List<ProductDTO> productDTOList = new ArrayList<>();
+		for (ProductEntity productEntity : pageProductEntity) {
+			productDTOList.add(converter.modelMapper().map(productEntity, ProductDTO.class));
+		}
+		return productDTOList;
+	}
+
+
+	@Override
+	public int count() {
+		return (int) productrepository.count();
+	}
+
+
+	@Override
+	public List<ProductDTO> findByTypeId(Pageable page, Long type) {
+		List<ProductEntity> pageProductEntity= productrepository.findByTypeId(page,type);
+		List<ProductDTO> productDTOList = new ArrayList<>();
+		for (ProductEntity productEntity : pageProductEntity) {
+			productDTOList.add(converter.modelMapper().map(productEntity, ProductDTO.class));
+		}
+		return productDTOList;
+	}
+
+
+	@Override
+	public List<ProductDTO> findByCategoryId(Pageable page, Long category) {
+		List<ProductEntity> pageProductEntity= productrepository.findByCategoryId(page,category);
+		List<ProductDTO> productDTOList = new ArrayList<>();
+		for (ProductEntity productEntity : pageProductEntity) {
+			productDTOList.add(converter.modelMapper().map(productEntity, ProductDTO.class));
+		}
+		return productDTOList;
+	}
+
+
+	@Override
+	public List<ProductDTO> findByCategoryIdAndTypeId(Pageable page, Long categoryId, Long typeId) {
+		List<ProductEntity> pageProductEntity= productrepository.findByCategoryIdAndTypeId(page,categoryId,typeId);
+		List<ProductDTO> productDTOList = new ArrayList<>();
+		for (ProductEntity productEntity : pageProductEntity) {
+			productDTOList.add(converter.modelMapper().map(productEntity, ProductDTO.class));
+		}
+		return productDTOList;
+	}
+
+
+	@Override
+	public int countByCategoryIdAndTypeId(Long categoryId, Long typeId) {
+		return productrepository.countByCategoryIdAndTypeId(categoryId, typeId);
 	}
 }

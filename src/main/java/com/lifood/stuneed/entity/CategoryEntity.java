@@ -3,8 +3,12 @@ package com.lifood.stuneed.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,6 +22,23 @@ public class CategoryEntity extends BaseEntity{
 	@OneToMany(mappedBy = "category")
 	private List<ProductEntity> product = new ArrayList<>();
 	
+//	@ManyToMany(cascade = {
+//	        CascadeType.PERSIST,
+//	        CascadeType.MERGE
+//	    })
+//	@JoinTable(name = "product",
+//    joinColumns = @JoinColumn(name = "category_id"),
+//    inverseJoinColumns = @JoinColumn(name = "type_id"))
+//    private List<TypeEntity> types = new ArrayList<>();
+//	
+//	public List<TypeEntity> getTypes() {
+//		return types;
+//	}
+//
+//	public void setTypes(List<TypeEntity> types) {
+//		this.types = types;
+//	}
+
 	public String getName() {
 		return name;
 	}

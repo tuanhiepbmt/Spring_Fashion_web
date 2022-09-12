@@ -6,9 +6,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,22 +28,27 @@ public class ProductEntity extends BaseEntity {
 	@JoinColumn(name = "type_id")
 	private TypeEntity type;
 
-	@ManyToMany
-	@JoinTable(name = "product_material",
-		joinColumns = @JoinColumn(name = "productId"),
-		inverseJoinColumns = @JoinColumn(name = "materialId")
-	)
-	private List<MaterialEntity> materials = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "material_id")
+	private MaterialEntity material;
 
 	@Column
 	private String[] tags;
 
-	@ManyToMany
-	@JoinTable(name = "product_origin",
-		joinColumns = @JoinColumn(name = "productId"),
-		inverseJoinColumns = @JoinColumn(name = "originId")
-	)
-	private List<OriginEntity> origins = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "origin_id")
+	private OriginEntity origin;
+	
+	@OneToMany(mappedBy = "product")
+	private List<CartItemEntity> cartItem = new ArrayList<>();
+	
+	public List<CartItemEntity> getCartItem() {
+		return cartItem;
+	}
+
+	public void setCartItem(List<CartItemEntity> cartItem) {
+		this.cartItem = cartItem;
+	}
 
 	@Column
 	private String[] image;
@@ -97,14 +101,6 @@ public class ProductEntity extends BaseEntity {
 		this.type = type;
 	}
 
-	public List<MaterialEntity> getMaterials() {
-		return materials;
-	}
-
-	public void setMaterials(List<MaterialEntity> materials) {
-		this.materials = materials;
-	}
-
 	public String[] getTags() {
 		return tags;
 	}
@@ -113,13 +109,6 @@ public class ProductEntity extends BaseEntity {
 		this.tags = tags;
 	}
 
-	public List<OriginEntity> getOrigins() {
-		return origins;
-	}
-
-	public void setOrigins(List<OriginEntity> origins) {
-		this.origins = origins;
-	}
 
 	public String[] getImage() {
 		return image;
@@ -168,5 +157,23 @@ public class ProductEntity extends BaseEntity {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public MaterialEntity getMaterial() {
+		return material;
+	}
+
+	public void setMaterial(MaterialEntity material) {
+		this.material = material;
+	}
+
+	public OriginEntity getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(OriginEntity origin) {
+		this.origin = origin;
+	}
+
+
 
 }

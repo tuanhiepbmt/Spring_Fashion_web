@@ -11,7 +11,7 @@
                 <li class="menu-title">Menu</li>
 
                 <li>
-                    <a href="/admin" class="waves-effect">
+                    <a href="/admin/" class="waves-effect">
                         <i class="mdi mdi-home-variant-outline"></i>
                         <span>Trang chủ</span>
                     </a>
@@ -21,7 +21,7 @@
                 <li class="menu-title">Các thành phần</li>
 
                 <li>
-                    <a href="/admin/users" class="waves-effect">
+                    <a href="/admin/user?link=list&page=1&limit=1" class="waves-effect">
                         <i class="ri-file-user-fill"></i>
                         <span>Người dùng</span>
                     </a>
@@ -47,8 +47,8 @@
                         <span>Sản phẩm</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="/admin/products">Tất cả sản phẩm</a></li>
-                        <li><a href="/admin/add-product">Thêm sản phẩm</a></li>
+                        <li><a href="/admin/product?link=list&limit=1&page=1">Tất cả sản phẩm</a></li>
+                        <li><a href="/admin/product?link=add">Thêm sản phẩm</a></li>
                     </ul>
                 </li>
 

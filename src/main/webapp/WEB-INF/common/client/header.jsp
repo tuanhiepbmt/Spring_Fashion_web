@@ -48,21 +48,21 @@
             <div class="shop-menu">
                 <ul>
                     <li>
-                        <a onclick="Dontlogin()" style="cursor: pointer;">
+                        <a onclick="growing()" style="cursor: pointer;">
                             <i class="fa fa-heart"></i>
                             <span class="shop-menu-ttl">Danh sách yêu thích</span>
                             <span id="topbar-favorites"></span>
                         </a>
                     </li>
                     <li>
-                        <a onclick="Dontlogin()" style="cursor: pointer;">
+                        <a onclick="growing()" style="cursor: pointer;">
                             <i class="fa fa-bar-chart"></i>
                             <span class="shop-menu-ttl">So sánh</span> 
                         </a>
                     </li>
                     <li class="topauth">
                     	
-	                        <a href="passingGuests">
+	                        <a  onclick="growing()" href="#">
 	                            <i class="fa fa-user"></i>
 	                            <span class="shop-menu-ttl">
 	                               <c:if test="${ empty user }"> Thông tin khách hàng </c:if>
@@ -105,54 +105,25 @@
             <nav class="topmenu">
                 <!-- Catalog menu - start -->
                 <div class="topcatalog">
-                    <a class="topcatalog-btn" href="#"><span>Tất cả</span> danh mục</a>
+                    <a class="topcatalog-btn" href="product"><span>Tất cả</span> danh mục</a>
                     <ul class="topcatalog-list">
-                        <li>
-                            <a href="women-dress">
-                                Thời Trang Nữ
-                            </a>
-                            <i class="fa fa-angle-right"></i>
-                            <ul>
-                                <li>
-                                    <a href="women-dress">
-                                        Đầm và Váy
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="women-shirt">
-                                        Áo
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="women-trouser">
-                                        Quần
-                                    </a>
-                                </li>
-                            </ul> 
-                        </li>
-                        <li>
-                            <a href="men-shirt">
-                                Thời Trang Nam
-                            </a>
-                            <i class="fa fa-angle-right"></i>
-                            <ul>
-                                <li>
-                                    <a href="men-trouser">
-                                        Quần
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="men-shirt">
-                                        Áo
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="women-cap">
-                                        Mũ
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        <c:forEach var="list" items="${ listTypeInCategory }" varStatus="i">
+	                        <li>
+	                            <a href="product?link=&categoryId=${ categorys[i.index].id }&typeId=${ list[0].id }">
+	                                ${ categorys.get(i.index).getName() }
+	                            </a>
+	                            <i class="fa fa-angle-right"></i>
+	                            <ul>
+	                            	<c:forEach var="listType" items="${ list }">
+		                                <li>
+		                                    <a href="product?link=&categoryId=${ categorys[i.index].id }&typeId=${ listType.id }">
+		                                        ${ listType.getName() }
+		                                    </a>
+		                                </li>
+		                        	</c:forEach>
+	                            </ul> 
+	                        </li>
+                        </c:forEach>
                     </ul>
                 </div>
                 <!-- Catalog menu - end -->
@@ -166,83 +137,22 @@
                             Trang chủ
                         </a>
                     </li>
-                    <li class="menu-item-has-children">
-                        <a href="women-dress">
-                            Thời Trang Nữ <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a href="women-dress">
-                                    Đầm và Váy
-                                </a>
-                            </li>
-                            <li>
-                                <a href="women-trouser">
-                                    Quần
-                                </a>
-                            </li>
-                            <li>
-                                <a href="women-shirt">
-                                    Áo
-                                </a>
-                            </li>
-                            <!-- <li>
-                                <a href="catalog-gallery-2">
-                                    Catalog Gallery - Style 2
-                                </a>
-                            </li>
-                            <li>
-                                <a href="catalog-table">
-                                    Catalog Table
-                                </a>
-                            </li> -->
-                        </ul>
-                    </li>
-                    <li class="menu-item-has-children">
-                        <a href="men-shirt">
-                            Thời Trang Nam <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a href="men-trouser">
-                                    Quần 
-                                </a>
-                            </li>
-                            <li>
-                                <a href="men-shirt">
-                                    Áo
-                                </a>
-                            </li>
-                            <li>
-                                <a href="men-cap">
-                                    Mũ
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- <li class="menu-item-has-children">
-                        <a href="blog">
-                            Blog <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="sub-menu">
-                            <li>
-                                <a href="blog">
-                                    Blog - Style 1
-                                </a>
-                            </li>
-                            <li>
-                                <a href="blog-2">
-                                    Blog - Style 2
-                                </a>
-                            </li>
-                            <li>
-                                <a href="post">
-                                    Single Post
-                                </a>
-                            </li>
-                        </ul>
-                    </li> -->
-                    
+                    <c:forEach var="list" items="${ listTypeInCategory }" varStatus="i">
+	                    <li class="menu-item-has-children">
+	                        <a href="product?link=&categoryId=${ categorys[i.index].id }&typeId=${ list[0].id }">
+	                            ${ categorys.get(i.index).getName() } <i class="fa fa-angle-down"></i>
+	                        </a>
+	                        <ul class="sub-menu">
+	                        	<c:forEach var="listType" items="${ list }">
+		                            <li>
+		                                <a href="product?link=&categoryId=${ categorys[i.index].id }&typeId=${ listType.id }">
+		                                    ${ listType.getName() }
+		                                </a>
+		                            </li>
+		                        </c:forEach>
+	                        </ul>
+	                    </li>
+	                </c:forEach>
                 </ul>
                 <!-- Main menu - end -->
 
@@ -251,7 +161,7 @@
                     <a id="topsearch-btn" class="topsearch-btn" href="#"><i class="fa fa-search"></i></a>
                     <div class="topsearch-form">
                         <input onkeypress="return runScript(event)" id="ipSearch" type="text" placeholder="Tìm kiếm Sản Phẩm">
-                        <button id="search" onclick="search()" type="submit"><i class="fa fa-search"></i></button>
+                        <button id="search" onclick="growing()" type="submit"><i class="fa fa-search"></i></button>
                     </div>
                 </div>
                 <!-- Search - end -->

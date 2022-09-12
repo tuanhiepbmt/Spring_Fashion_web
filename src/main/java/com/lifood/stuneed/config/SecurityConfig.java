@@ -19,6 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import com.lifood.stuneed.service.impl.CustomUserDetailService;
 
@@ -26,6 +27,9 @@ import com.lifood.stuneed.service.impl.CustomUserDetailService;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
+	@Autowired
+	private Fitter filter;
+	
 	@Autowired
 	private CustomUserDetailService customUserDetailService;
 	
@@ -36,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	    .antMatchers("/admin/**").access("hasAuthority('ADMIN')")
 	    .antMatchers("/api/**").access("hasAuthority('ADMIN')")
 	    .and() 
-	    .authorizeRequests()
+	    .authorizeRequests() 
 		.antMatchers("/home","/","/template/**","/api/**").permitAll()
 	    .and()
 	    .formLogin(form-> form
@@ -63,9 +67,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				})
 	    	    .failureUrl("/login?success=fail")
 	    	    .loginProcessingUrl("/j_spring_security_check"))
-	    
+
 	    .logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").and()
 	    .exceptionHandling().accessDeniedPage("/login").and()
+		.addFilterAfter(
+				filter, BasicAuthenticationFilter.class)
 	    .csrf().disable();
 	}
 	@Override

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,8 +16,8 @@ public class MaterialEntity extends BaseEntity{
 	@Column
 	private String name;
 
-	@ManyToMany(mappedBy = "materials")
-	private List<ProductEntity> products=new ArrayList<>();
+	@OneToMany(mappedBy = "material")
+	private List<ProductEntity> product = new ArrayList<>();
 	
 	public String getName() {
 		return name;
@@ -26,12 +27,13 @@ public class MaterialEntity extends BaseEntity{
 		this.name = name;
 	}
 
-	public List<ProductEntity> getProducts() {
-		return products;
+	public List<ProductEntity> getProduct() {
+		return product;
 	}
 
-	public void setProducts(List<ProductEntity> products) {
-		this.products = products;
+	public void setProduct(List<ProductEntity> product) {
+		this.product = product;
 	}
+
 	
 }

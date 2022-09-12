@@ -821,3 +821,16 @@ function del_cookie(name) {
     document.cookie = 'roundcube_sessauth' + 
     '=; expires=Thu, 01-Jan-70 00:00:01 GMT;';
 }
+function growing()
+{
+	const Toast = Swal.mixin({
+		toast: true,
+		position: 'top-end',
+		showConfirmButton: false,
+		timer: 3000
+	})
+	Toast.fire({
+		type: "warning",
+		title: 'Tính năng đang phát triển'
+	})
+}

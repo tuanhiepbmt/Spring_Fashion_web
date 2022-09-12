@@ -29,9 +29,4 @@ public class Login {
 		else
 			return new ModelAndView("redirect:/");
 	}
-	@GetMapping("/test")
-	public List<OriginDTO> test()
-	{
-		return iOriginService.findAll();
-	}
 }

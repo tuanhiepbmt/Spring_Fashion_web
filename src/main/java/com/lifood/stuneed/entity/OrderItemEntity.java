@@ -6,8 +6,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="orderDetail")
-public class OrderDetailEntity extends BaseEntity{
+@Table(name="orderItem")
+public class OrderItemEntity extends BaseEntity{
 	
 	@Column
 	private int quantity;

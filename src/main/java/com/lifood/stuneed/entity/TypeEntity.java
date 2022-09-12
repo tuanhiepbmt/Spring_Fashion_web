@@ -5,8 +5,12 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "type")
@@ -17,6 +21,17 @@ public class TypeEntity extends BaseEntity{
 
 	@OneToMany(mappedBy = "type")
 	private List<ProductEntity> product = new ArrayList<>();
+	 
+//	@ManyToMany(mappedBy = "types")
+//	private List<CategoryEntity> categorys = new ArrayList<>();
+//
+//	public List<CategoryEntity> getCategorys() {
+//		return categorys;
+//	}
+//
+//	public void setCategorys(List<CategoryEntity> categorys) {
+//		this.categorys = categorys;
+//	}
 
 	public String getName() {
 		return name;

@@ -2,6 +2,7 @@ package com.lifood.stuneed.api;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -11,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,31 +36,43 @@ public class ProductAPI {
 	{
 		return iProductService.findAll();
 	}
-
+	
 	@PreAuthorize("hasAuthority('ADMIN')" )
 	@PostMapping(value="/product")
 	public ProductDTO addProduct(@ModelAttribute ProductDTO model)
 	{
+		saveImage(model);
+		return iProductService.save(model);
+	}
+	
+
+//	@PreAuthorize("hasAuthority('ADMIN')" )
+	@PutMapping(value="/product")
+	public ProductDTO editProduct(@ModelAttribute ProductDTO model)
+	{
+		saveImage(model);
+		return iProductService.save(model);
+	}
+	
+	private void saveImage(ProductDTO model) {
 		String path=servletContext.getRealPath("/template/");
 		File theDir = new File(path+"/images_upload/product_images");
 		if (!theDir.exists()){
 		    theDir.mkdirs();
 		}
-		String[] image=new String[10];
+		List<String> imageList=new ArrayList<>();
 		try {
-			int i=0;
 			for (MultipartFile file : model.getImageFile()) {
-				image[i]=file.getOriginalFilename();
-				String filePath= path + "/images_upload/product_images/" + file.getOriginalFilename();
-				model.setImage(image);
+				int random = (int) Math.floor(((Math.random() * 899999) + 100000));
+				imageList.add(random+file.getOriginalFilename());
+				String filePath= path + "/images_upload/product_images/"+random+file.getOriginalFilename();
 				file.transferTo(Path.of(filePath));
-				i++;
 			} 
-				model.setImageFile(null);
+			model.setImageFile(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return iProductService.save(model);
+		String[] imageArray = (String[]) imageList.toArray(new String[imageList.size()]);
+		model.setImage(imageArray);
 	}
-	
 }

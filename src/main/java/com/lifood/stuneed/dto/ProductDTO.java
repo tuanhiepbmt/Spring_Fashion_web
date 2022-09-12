@@ -1,8 +1,11 @@
 package com.lifood.stuneed.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import com.lifood.stuneed.entity.CartItemEntity;
 
 public class ProductDTO extends BaseDTO{
 	
@@ -11,8 +14,8 @@ public class ProductDTO extends BaseDTO{
 	private Long materialId;
 	private Long originId;
 	private CategoryDTO category;
-	private List<MaterialDTO> materials;
-	private List<OriginDTO> origins;
+	private MaterialDTO material;
+	private OriginDTO origin;
 	private String[] size;
 	private Long typeId;
 	private TypeDTO type;
@@ -25,24 +28,22 @@ public class ProductDTO extends BaseDTO{
 	private String shortDescription;
 	private String description;
 	
-	
+	public String sizeToString() {
+		String sizeToString="";
+		for (int i = 0; i < this.size.length; i++) {
+			sizeToString+=size[i];
+			if(i!=this.size.length-1)
+			{
+				sizeToString+=", ";
+			}
+		}
+		return sizeToString;
+	}
 	public CategoryDTO getCategory() {
 		return category;
 	}
 	public void setCategory(CategoryDTO category) {
 		this.category = category;
-	}
-	public List<MaterialDTO> getMaterials() {
-		return materials;
-	}
-	public void setMaterials(List<MaterialDTO> materials) {
-		this.materials = materials;
-	}
-	public List<OriginDTO> getOrigins() {
-		return origins;
-	}
-	public void setOrigins(List<OriginDTO> origins) {
-		this.origins = origins;
 	}
 	public String getName() {
 		return name;
@@ -133,6 +134,18 @@ public class ProductDTO extends BaseDTO{
 	}
 	public void setType(TypeDTO type) {
 		this.type = type;
+	}
+	public MaterialDTO getMaterial() {
+		return material;
+	}
+	public void setMaterial(MaterialDTO material) {
+		this.material = material;
+	}
+	public OriginDTO getOrigin() {
+		return origin;
+	}
+	public void setOrigin(OriginDTO origin) {
+		this.origin = origin;
 	}
 	
 }
