@@ -104,7 +104,7 @@
                                                             </b>
                                                         </td>
                                                         <td class="cart-del">
-                                                            <a style="cursor: pointer;" id="remove${ i }" class="cart-remove"></a>
+                                                            <a style="cursor: pointer;" onclick='deleteItem(${ i },${ product.id })' id="delete${ i }" class="cart-remove"></a>
                                                         </td>
                                                     </tr>
                                                 <c:set var="i" value="${ i+1 }"/>
@@ -125,7 +125,7 @@
                                 
                                 <div class="cart-submit">
                                     <a onclick="payment()" <c:if test="${ empty products }">style='pointer-events: none;cursor: default;'</c:if> class="cart-submit-btn">Đặt Hàng</a>
-                                    <a onclick="removeCart()" <c:if test="${ empty products }">style='pointer-events: none;cursor: default;'</c:if> class="cart-clear">Xóa giỏ hàng</a>
+                                    <a onclick="deleteCart()" <c:if test="${ empty products }">style='pointer-events: none;cursor: default;'</c:if> class="cart-clear">Xóa giỏ hàng</a>
                                 </div>
                             </form>
                             <!-- Cart Items - end -->
@@ -136,82 +136,42 @@
                     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
                     <!-- Main Content - end -->
                     <script>
-                        function payment() {
-                                var products=[]
-                                for (let index = 0; index < i; index++) {
-                                    if($('#ip'+index).val()!=undefined&&$('#'+index).val()!=undefined)
-                                    products=products.concat({id:$('#'+index).val(),quantity:$('#ip'+index).val(),size:document.getElementById('pSize'+index).innerText})
+                    	function deleteItem(i,id)
+                    	{
+                    		$.ajax({
+                                url:'/api/cart',
+                                type:'DELETE',
+                                contentType: "application/json; charset=utf-8",
+            					data: JSON.stringify({
+            						productId:id
+            					}),
+                                success:function(data){
+                                    if(data.message=='Xóa thành công')
+                                    {
+                                    	document.getElementById('product'+i).remove()
+                                    	update()
+                                    }
                                 }
+                            })
+                    	}
+                        function payment() {
                                 axios({
-                                    method: 'put',
-                                    url: '/order',
-                                    data: {
-                                        products:products,
-                                    },
+                                    method: 'post',
+                                    url: '/api/order'
                                 })
                                 .then(data=>{
-                                    data=data.data
                                     const Toast = Swal.mixin({
                                         toast: true,
                                         position: 'top-end',
                                         showConfirmButton: false,
                                         timer: 3000
                                     })
-                                    if(data=='Giỏ hàng trống!')
-                                    {
-                                        Toast.fire({
-                                            type: "warning",
-                                            title: 'Giỏ Hàng Trống'
-                                        })
-                                    }else if(data=='Guest Bạn cập nhập đủ thông tin bao gồm Tên, Số điện thoại, Địa chỉ')
-                                    {
-                                        Toast.fire({
-                                            type: "warning",
-                                            title: 'Bạn cập nhập đủ thông tin bao gồm Tên, Số điện thoại, Địa chỉ'
-                                        })
-                                        setTimeout(
-                                            () => {
-                                                location.replace('./passingGuests')
-                                            },
-                                            1 * 1000
-                                        );
-                                    }else if(data=='Bạn cập nhập đủ thông tin bao gồm Tên, Số điện thoại, Địa chỉ')
-                                    {
-                                        Toast.fire({
-                                            type: "warning",
-                                            title: data
-                                        })
-                                        setTimeout(
-                                            () => {
-                                                location.replace('./account')
-                                            },
-                                            1 * 1000
-                                        );
-                                    }else if(data=='Thành công')
-                                    { 
                                         Swal.fire(
                                             '',
                                             'Đặt Hàng Thành Công',
                                             'success'
                                         )
-                                        $.ajax({
-                                            url:'/removeCart',
-                                            type:'DELETE',
-                                            success:function(data){
-                                                if(data=='Thành công')
-                                                {
-                                                    document.getElementById('cartHeader').innerText=0
-                                                    document.getElementById('removeAll').remove()
-                                                    document.getElementById('total').innerHTML='0'
-                                                }
-                                            }
-                                        })
-                                    }else {
-                                        Toast.fire({
-                                            type: "success",
-                                            title: data
-                                        })
-                                    }
+                                        deleteCart()
                                 })
                             
                         
@@ -269,14 +229,22 @@
                             updateTotalOneProduct()
                             updateTotal()
                         }
-                        function removeCart(){
-                            document.getElementById('removeAll').remove()
-                            document.getElementById('total').innerHTML='0'
+                        function deleteCart(){
                             $.ajax({
-                                url:'/removeCart',
+                                url:'/api/cart',
                                 type:'DELETE',
+                                contentType: "application/json; charset=utf-8",
+                                success:function(data){
+	                                if(data.message=='Xóa thành công')
+	                                {
+	                            		document.getElementById('removeAll').remove()
+	                            		document.getElementById('total').innerHTML='0'
+	                            		//document.getElementById('cartHeader').innerText=0
+	                                	update()
+	                                }
+                            	}
                             })
-                            document.getElementById('cartHeader').innerText=0
+                            
                         }
                         
                     

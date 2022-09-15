@@ -2,6 +2,7 @@ package com.lifood.stuneed.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -13,12 +14,22 @@ public class OrderItemEntity extends BaseEntity{
 	private int quantity;
 	
 	@ManyToOne
+	@JoinColumn(name="orderId")
 	private OrderEntity order;
 	
 	@ManyToOne
+	@JoinColumn(name="productId")
 	private ProductEntity product;
 	
-	
+	public OrderItemEntity() {
+		super();
+	}
+	public OrderItemEntity(int quantity, OrderEntity order, ProductEntity product) {
+		super();
+		this.quantity = quantity;
+		this.order = order;
+		this.product = product;
+	}
 	public int getQuantity() {
 		return quantity;
 	}

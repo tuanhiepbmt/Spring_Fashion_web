@@ -30,12 +30,12 @@
                 <li>
                     <a href="javascript: void(0);" class="waves-effect">
                         <i class="ri-printer-line"></i>
-                        <span class="badge rounded-pill bg-danger float-end">length</span>
+                        <span class="badge rounded-pill bg-danger float-end">${ countStatusId1L }</span>
                         <span>Đơn hàng</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="/admin/orders">Tất cả đơn hàng</a></li>
-                        <li><a href="/admin/order1">Chờ xác nhận<span class="badge rounded-pill bg-danger float-end">length</span></a></li>
+                        <li><a href="/admin/order1">Chờ xác nhận<span class="badge rounded-pill bg-danger float-end">${ countStatusId1L }</span></a></li>
                         <li><a href="/admin/order2">Đang giao hàng</a></li>
                         <li><a href="/admin/order3">Đã giao hàng</a></li>
                     </ul>

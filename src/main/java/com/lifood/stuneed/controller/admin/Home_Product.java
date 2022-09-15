@@ -1,5 +1,7 @@
 package com.lifood.stuneed.controller.admin;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.ModelMap;
@@ -8,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.lifood.stuneed.dto.OrderDTO;
 import com.lifood.stuneed.dto.ProductDTO;
 import com.lifood.stuneed.service.ICategoryService;
 import com.lifood.stuneed.service.IMaterialService;
+import com.lifood.stuneed.service.IOrderItemService;
+import com.lifood.stuneed.service.IOrderService;
 import com.lifood.stuneed.service.IOriginService;
 import com.lifood.stuneed.service.IProductService;
 import com.lifood.stuneed.service.ITypeService;
@@ -33,6 +38,9 @@ public class Home_Product {
 
 	@Autowired
 	private IProductService iProductService;
+	
+	@Autowired
+	private IOrderService iOrderService;
 
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping(value = { "/home", "/" })
@@ -62,5 +70,13 @@ public class Home_Product {
 			view = "views/admin/edit_product";
 		}
 		return new ModelAndView(view, model);
+	}
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@GetMapping(value = { "/order" })
+	public ModelAndView order(ModelMap model,ProductDTO productDTO)
+	{
+		List<OrderDTO> dtos= iOrderService.findAll();
+		model.addAttribute("orders", dtos);
+		return new ModelAndView("views/admin/list_order");
 	}
 }

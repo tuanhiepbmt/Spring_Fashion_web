@@ -77,7 +77,7 @@
                             <a href="cart">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span class="shop-menu-ttl">Giỏ Hàng</span>
-                                (<b id="cartHeader">length</b>)
+                                <c:if test="${ not empty user }">(<b id="cartHeader">${ countCart }</b>)</c:if>
                             </a>
                         </div>
                     </li>

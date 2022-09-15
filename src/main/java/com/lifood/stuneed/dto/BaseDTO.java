@@ -20,7 +20,15 @@ public abstract class BaseDTO {
 	private String sortBy;
 	private Pageable pageable;
 	private int quantity;
+	private String message;
+	private Long orderId;
 	
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
 	public String getLink() {
 		return link;
 	}
@@ -109,5 +117,11 @@ public abstract class BaseDTO {
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	public Long getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(Long orderId) {
+		this.orderId = orderId;
 	}
 }

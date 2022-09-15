@@ -1,12 +1,15 @@
 package com.lifood.stuneed.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="order")
+@Table(name="orders")
 public class OrderEntity extends BaseEntity{
 	
 	@ManyToOne
@@ -17,7 +20,15 @@ public class OrderEntity extends BaseEntity{
 	@JoinColumn(name="statusId")
 	private StatusOrderEntity status;
 	
+	@OneToMany(mappedBy = "order")
+	private List<OrderItemEntity> orderItems;
 	
+	public List<OrderItemEntity> getOrderItems() {
+		return orderItems;
+	}
+	public void setOrderItems(List<OrderItemEntity> orderItems) {
+		this.orderItems = orderItems;
+	}
 	public StatusOrderEntity getStatus() {
 		return status;
 	}
