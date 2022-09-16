@@ -7,8 +7,6 @@ public class CartItemDTO extends BaseDTO{
 	
 	private ProductDTO product;
 	
-	private Long cartId;
-	
 	private Long productId;
 	
 	public int getQuantity() {
@@ -28,12 +26,6 @@ public class CartItemDTO extends BaseDTO{
 	}
 	public void setProduct(ProductDTO product) {
 		this.product = product;
-	}
-	public Long getCartId() {
-		return cartId;
-	}
-	public void setCartId(Long cartId) {
-		this.cartId = cartId;
 	}
 	public Long getProductId() {
 		return productId;

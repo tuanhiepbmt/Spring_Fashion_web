@@ -189,7 +189,7 @@
                                             <div class="prodlist-i-skuitem">
                                                 <p class="prodlist-i-skuttl">Clothes sizes</p>
                                                 <div class="offer-props-select">
-                                                    <p id="pSize i %>">XS</p>
+                                                    <p id="pSize${ product.id }">XS</p>
                                                     <div style="display: flex;"></div>
                                                     <ul>
                                                         <li><a style="cursor: pointer;">S</a></li>
@@ -212,12 +212,12 @@
                                         </div>
                                         <div class="prodlist-i-action">
                                             <p class="prodlist-i-qnt">
-                                                <input id="ip i " aria-label="quantity" max=10 min=1 class="inputQuantity i " value="1" type="number">
+                                                <input id="ip${ product.id }" aria-label="quantity" max=10 min=1 class="inputQuantity${ product.id }" value="1" type="number">
                                                 <a class="is-form plus"></a>
                                                 <a class="is-form minus"></a>
                                             </p>
                                             <p class="prodlist-i-addwrap">
-                                                <a onclick="addProduct(``)" id="addProduct i " class="prodlist-i-add" style="font-size: 15px; cursor: pointer;">Thêm vào giỏ
+                                                <a onclick="addProduct(${ product.id })" id="addProduct${ product.id }" class="prodlist-i-add" style="font-size: 15px; cursor: pointer;">Thêm vào giỏ
 													hàng</a>
                                             </p>
                                         </div>
@@ -308,6 +308,41 @@
 		            }
 		        }
 		    });
+		    function addProduct(id) {
+				//var url = '/addCart?id='+id+'&quantity=' + $('.inputQuantity'+id).val() + '&size=' + document.getElementById('pSize'+id).innerText
+
+				$.ajax({
+					url: '/api/cart',
+					type: 'POST',
+					contentType: "application/json; charset=utf-8",
+					data: JSON.stringify({
+						quantity:$('.inputQuantity'+id).val(),
+						productId:id
+					}),
+					success: function (data) {
+						if (data.message == 'Vui lòng đăng nhập') {
+							location.replace('./login')
+						}
+						else { 
+							const Toast = Swal.mixin({
+								toast: true,
+								position: 'top-end',
+								showConfirmButton: false,
+								timer: 3000
+							})
+							Toast.fire({
+								type: "success",
+								title: 'Đã Thêm vào Giỏ Hàng ♥'
+							})
+							if (data.message != 'Sản phẩm tồn tại') {
+								var str = document.getElementById('cartHeader').innerText
+								str = parseInt(str) + 1
+								document.getElementById('cartHeader').innerText = str
+							}
+						} 
+					}
+				})
+			}
 		    </script>
             <%@include file="/WEB-INF/common/client/footer.jsp" %>
                 <%@include file="/WEB-INF/common/client/plugin.jsp" %>

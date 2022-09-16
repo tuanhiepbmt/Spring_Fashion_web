@@ -30,6 +30,8 @@ public class ProductDTO extends BaseDTO{
 	
 	public String sizeToString() {
 		String sizeToString="";
+		if(this.size==null)
+			size=new String[]{"X","L","XL","S"};
 		for (int i = 0; i < this.size.length; i++) {
 			sizeToString+=size[i];
 			if(i!=this.size.length-1)

@@ -15,6 +15,7 @@ public class UserDTO extends BaseDTO{
 	private String avatar;
 	private StatusUserDTO status;
 	
+	
 	public RoleDTO getRole() {
 		return role;
 	}

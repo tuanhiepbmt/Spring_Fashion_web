@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lifood.stuneed.converter.Convert;
+import com.lifood.stuneed.dto.CartDTO;
 import com.lifood.stuneed.dto.ProductDTO;
 import com.lifood.stuneed.entity.CartEntity;
 import com.lifood.stuneed.entity.CartItemEntity;
@@ -43,5 +44,11 @@ public class CartService implements ICartService{
 			
 		}
 		return productsDTOList;
+	}
+
+	@Override
+	public CartDTO findByUserId(Long id) {
+		
+		return converter.modelMapper().map(cartRepository.findByUserId(id), CartDTO.class);
 	}
 }
